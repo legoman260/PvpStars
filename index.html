@@ -3,181 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PVP STAR - ARENA</title>
+    <title>PVP STAR ENGINE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --tg-theme-bg-color: #0e1621;
-            --accent-color: #2481cc;
-            --gold-color: #ffcc00;
-        }
+        /* БАЗОВЫЙ ТЕХНИЧЕСКИЙ ДИЗАЙН (Заменишь на свой CSS) */
+        body { background: #121212; color: white; font-family: sans-serif; margin: 0; padding: 0; }
+        
+        /* Шапка */
+        .header { display: flex; justify-content: space-between; padding: 15px; background: #1e1e1e; border-bottom: 2px solid #333; }
+        .balance-box { background: #ffcc00; color: black; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
 
-        body {
-            background: radial-gradient(circle at top, #1b2735 0%, #090a0f 100%);
-            color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+        /* Контентные зоны */
+        .tab-content { display: none; padding: 20px; padding-bottom: 100px; }
+        .tab-content.active { display: block; }
 
-        /* Карточка профиля */
-        .app-container {
-            width: 90%;
-            max-width: 400px;
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 20px;
-            backdrop-filter: blur(15px);
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
+        /* Карточка игры */
+        .game-card { background: #2a2a2a; border-radius: 15px; margin-bottom: 15px; overflow: hidden; border: 1px solid #444; }
+        .game-banner { width: 100%; height: 120px; background: #444; display: flex; align-items: center; justify-content: center; }
+        .game-info { padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-play { background: #0088cc; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--gold-color);
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
-        }
-
-        .user-card {
-            margin: 20px 0;
-        }
-
-        .avatar {
-            width: 80px;
-            height: 80px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            border: 3px solid rgba(255,255,255,0.1);
-        }
-
-        .username {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        /* Плашка баланса */
-        .balance-container {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 10px;
-        }
-
-        .balance-amount {
-            font-size: 22px;
-            color: #4facfe;
-            font-weight: 800;
-        }
-
-        /* Кнопки */
-        .actions {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
-
-        .btn {
-            padding: 16px;
-            border-radius: 15px;
-            border: none;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-play {
-            background: linear-gradient(45deg, #00c6ff, #0072ff);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
-        }
-
-        .btn-play:active {
-            transform: scale(0.96);
-        }
-
-        .btn-close {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-        }
+        /* Нижнее меню */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: #1e1e1e; display: flex; border-top: 1px solid #333; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; color: #888; cursor: pointer; }
+        .nav-item.active { color: #0088cc; font-weight: bold; }
+        .nav-icon { font-size: 20px; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <h1>Arena Star</h1>
+    <div class="header">
+        <div id="username">Загрузка...</div>
+        <div class="balance-box">⭐ <span id="balance_val">0</span></div>
+    </div>
+
+    <div id="games" class="tab-content active">
+        <h2>PVP Игры</h2>
         
-        <div class="user-card">
-            <div id="user_photo" class="avatar">👤</div>
-            <div id="user_name" class="username">Загрузка...</div>
-            
-            <div class="balance-container">
-                <span>Баланс:</span>
-                <span id="balance_val" class="balance-amount">0</span>
-                <span>💰</span>
+        <div class="game-card">
+            <div class="game-banner">ФОТО FLAPPY</div>
+            <div class="game-info">
+                <div><strong>Flappy Patrick</strong><br><small>Матч: 50 монет</small></div>
+                <button class="btn-play" onclick="startMatch('Flappy Patrick', 50)">ИГРАТЬ</button>
             </div>
         </div>
 
-        <div class="actions">
-            <button class="btn btn-play" onclick="startGame()">НАЙТИ СОПЕРНИКА</button>
-            <button class="btn btn-close" onclick="closeApp()">ВЫЙТИ В МЕНЮ</button>
+        <div class="game-card">
+            <div class="game-banner">ФОТО JUMP</div>
+            <div class="game-info">
+                <div><strong>Patrick Jump</strong><br><small>Матч: 100 монет</small></div>
+                <button class="btn-play" onclick="startMatch('Patrick Jump', 100)">ИГРАТЬ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="rating" class="tab-content">
+        <h2>Топ игроков</h2>
+        <p>1. Chornyllya — 13.45 ⭐</p>
+        <p>2. Player_2 — 10.00 ⭐</p>
+    </div>
+
+    <div id="profile" class="tab-content">
+        <h2>Твой профиль</h2>
+        <p>ID: <span id="user_id">...</span></p>
+        <button class="btn-play" style="background:red;" onclick="tg.close()">ВЫЙТИ</button>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('games', this)">
+            <div class="nav-icon">⚔️</div><span>Игры</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('rating', this)">
+            <div class="nav-icon">🏆</div><span>Топ</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('profile', this)">
+            <div class="nav-icon">👤</div><span>Профиль</span>
         </div>
     </div>
 
     <script>
-        // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
         tg.ready();
-        tg.expand(); // Развернуть на весь экран
+        tg.expand();
 
-        // Получаем данные пользователя
+        // 1. ИНИЦИАЛИЗАЦИЯ ДАННЫХ
         const user = tg.initDataUnsafe?.user;
         if (user) {
-            document.getElementById('user_name').innerText = user.first_name;
-            // Если есть фото, можно вывести первую букву имени
-            document.getElementById('user_photo').innerText = user.first_name.charAt(0);
-        }
-
-        // Читаем баланс из URL (бот пришлет ссылку вида ?bal=500)
-        const params = new URLSearchParams(window.location.search);
-        const currentBalance = params.get('bal') || '0';
-        document.getElementById('balance_val').innerText = currentBalance;
-
-        function startGame() {
-            // Здесь будет логика поиска игры
-            tg.MainButton.setText("ПОИСК ИГРОКА...").show();
-            setTimeout(() => {
-                tg.showAlert("Соперники пока спят! Заходи позже.");
-                tg.MainButton.hide();
-            }, 2000);
-        }
-
-        function closeApp() {
-            tg.close();
-        }
-    </script>
-</body>
-</html>
+            document
