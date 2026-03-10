@@ -10,7 +10,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 logging.basicConfig(level=logging.INFO)
 
 # --- КОНФИГУРАЦИЯ ---
-API_TOKEN = '8684876138:AAHreNwkFb4vz4eq00khT7MgPvFw1ZLOj4A'
+API_TOKEN = os.getenv("8684876138:AAHreNwkFb4vz4eq00khT7MgPvFw1ZLOj4A")
 ADMIN_ID = 6737709054  # ЗАМЕНИТЕ на ваш реальный ID
 MINI_APP_URL = 'https://pvpstars.netlify.app/' # Ссылка на ваш Web App
 # ---------------------
@@ -176,4 +176,5 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
+
         pass
