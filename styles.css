@@ -1,7 +1,7 @@
         /* БАЗОВЫЕ СТИЛИ (Дизайн будешь менять здесь) */
         body {
-            background: url(img/pvpback.png);
-                background-attachment: fixed; 
+            background: url(img/ChatGPT\ Image\ 10\ мар.\ 2026\ г.\,\ 16_18_36.png);
+            background-attachment: fixed; 
             background-position: center;  
             background-size: cover;       
             background-repeat: no-repeat;
@@ -20,8 +20,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: black;
+            background: rgb(255, 255, 255);
+            border-bottom: 1px solid rgb(255, 255, 255);
         }
 
         .balance-pill {
@@ -102,4 +103,6 @@
             font-size: 20px;
             margin-bottom: 3px;
         }
-
+        h2{
+            color: black;
+        }
