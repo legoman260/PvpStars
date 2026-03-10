@@ -1,6 +1,6 @@
         /* БАЗОВЫЕ СТИЛИ (Дизайн будешь менять здесь) */
         body {
-            background-color: #0e1621;
+            background: url(img/pvpback.png);
             color: white;
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
