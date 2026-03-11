@@ -70,17 +70,18 @@ function closeCreateModal() {
 }
 
 // СОЗДАНИЕ КОМНАТЫ
-function createRoom(bet) {
-    // bet — это число (3, 5, 10 или 15), которое приходит при нажатии на кнопку
+function createRoom(bet) { // <--- Переменная 'bet' заходит сюда
+    console.log("Выбрана ставка:", bet); // Это поможет нам увидеть ошибку в консоли
+    
     tg.showConfirm(`Создать комнату на ${bet} ⭐?`, (ok) => {
         if (ok) {
             const data = {
                 action: "create_room",
                 game: "Tower Build",
-                bet: bet  // Передаем именно то число, которое выбрали
+                bet: bet // <--- ТУТ ДОЛЖНО БЫТЬ СЛОВО bet, А НЕ 15
             };
-            tg.sendData(JSON.stringify(data)); // Отправляем данные боту
-            tg.close(); // Закрываем приложение
+            tg.sendData(JSON.stringify(data));
+            tg.close();
         }
     });
 }
