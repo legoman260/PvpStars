@@ -106,3 +106,33 @@
         h2{
             color: black;
         }
+        .game-card-main {
+    background: #222;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #333;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.game-icon {
+    font-size: 32px;
+}
+
+.online-badge {
+    background: #1a1a1a;
+    color: #2ecc71;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #2ecc71;
+}
