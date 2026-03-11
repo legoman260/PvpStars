@@ -71,31 +71,18 @@ function closeCreateModal() {
 
 // СОЗДАНИЕ КОМНАТЫ
 function createRoom(bet) {
-    // 1. ПРОВЕРКА: Видит ли функция нажатие?
-    alert("Нажата ставка: " + bet + " для игры: " + selectedGame);
-
-    if (currentBalance < bet) {
-        tg.showAlert("У вас недостаточно звёзд!");
-        return;
-    }
-
-    // Если selectedGame почему-то пустой, давай дадим ему имя по умолчанию
-    if (!selectedGame) selectedGame = "Tower Build";
-
-    const data = {
-        action: "create_room",
-        game: selectedGame,
-        bet: bet
-    };
-
-    console.log("Отправка данных:", data);
-
-    try {
-        tg.sendData(JSON.stringify(data));
-        tg.close(); 
-    } catch (e) {
-        alert("Ошибка отправки: " + e.message);
-    }
+    // bet — это число (3, 5, 10 или 15), которое приходит при нажатии на кнопку
+    tg.showConfirm(`Создать комнату на ${bet} ⭐?`, (ok) => {
+        if (ok) {
+            const data = {
+                action: "create_room",
+                game: "Tower Build",
+                bet: bet  // Передаем именно то число, которое выбрали
+            };
+            tg.sendData(JSON.stringify(data)); // Отправляем данные боту
+            tg.close(); // Закрываем приложение
+        }
+    });
 }
 
 // ОТРИСОВКА СПИСКА КОМНАТ
