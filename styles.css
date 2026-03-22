@@ -13,6 +13,10 @@
             flex-direction: column;
             height: 100vh;
         }
+        p{
+            color: black;
+            font-weight: 700;
+        }
 
         /* Шапка */
         .header {
@@ -51,7 +55,12 @@
         .tab-content.active {
             display: block; /* Показываем только активную */
         }
-
+        #tab-rating{
+            background-color: white;
+            border-radius: 10px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
         /* Карточка игры */
         .game-card {
             background: #17212b;
@@ -65,8 +74,8 @@
         }
 
         .btn-play {
-            background: #2481cc;
-            color: white;
+            background: #ffcc00;
+            color: black;
             border: none;
             padding: 10px 20px;
             border-radius: 10px;
@@ -137,10 +146,7 @@
     border-radius: 20px;
     border: 1px solid #2ecc71;
 }
-p{
-    color: black;
-    font-weight: 700;
-}
+
 #lobby-screen{
     background-attachment: fixed; 
     background-position: center;  
